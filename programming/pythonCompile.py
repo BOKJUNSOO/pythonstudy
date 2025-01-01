@@ -29,7 +29,7 @@ def func2():
     print(a)
     print(b)
 print("test function2:", sep='\t')
-dis.dis(func2) 
+dis.dis(func2)
 
 # 호출시 에러
 def error():
@@ -39,7 +39,7 @@ def error():
     b = [1,2,3]
 print("error function: ", sep='\t')
 dis.dis(error)
-
+error()
 def func3():
     # 함수 내부에서 전역스택을 참조할 수 있다.
     global a,b,k
@@ -52,6 +52,7 @@ def func3():
     b = b[::-1]
 
     # 스택을 바꾸는게 아니므로 global 키워드가 필요 없다.
+    # c의 주소를 참조하여 힙에 리스트를 바꿀수 있다!
     c.extend([5,6,7,8])
 print("test function3 with global keyword:", sep = '\t')
 dis.dis(func3)

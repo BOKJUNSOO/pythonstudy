@@ -7,7 +7,7 @@ def func():
     name = "BOKJUNSOO"
     ### local scope 참조
     print(name)
-#func()
+func()
 
 ### global scope 참조
 # print(name) 
@@ -29,7 +29,7 @@ def outer():
         name = "BOK HYE YEON"
         print(name)
     inner()
-#outer()
+outer()
 
 ### closure
 def outer():
@@ -42,6 +42,17 @@ def outer():
 A = outer()
 A()
 print()
+### 통제 밖의 scope에 대해서 쓰기는 굉장히 제한적이다.
+def outer():
+    name="BOKJUNSOO"
+    print("outer:",name)
+    def inner():
+        nonlocal name # 해당줄이 없으면 name 을 local에서 찾아서 오류
+        name = name + "is me" # name에 값을 할당하는 것이므로
+        print("inner",name)
+    inner()
+outer()
+
 ### 
 def outer():
     name="BOKJUNSOO"

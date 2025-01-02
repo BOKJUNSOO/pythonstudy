@@ -26,3 +26,25 @@ closure()
 print(f"closure 객체로 호출시 : {closure.__closure__[0].cell_contents}가 저장되어 있는 주소 {closure.__closure__[0]}")
 print(f"closure 객체로 호출시 : {closure.__closure__[1].cell_contents}가 저장되어 있는 주소 {closure.__closure__[1]}")
 
+import gc
+
+def outer():
+    name = "BOKJUNSOO"
+    def inner():
+        nonlocal name
+        name += " is me"
+        return name
+    return inner
+
+A = outer()
+print(A)
+
+address = id(A)  # 객체의 메모리 주소
+
+# 모든 객체를 순회하면서 주소와 매칭
+for obj in gc.get_objects():
+    if id(obj) == address:
+        print("Found object at address:", obj)
+        break
+else:
+    print("Object not found.")

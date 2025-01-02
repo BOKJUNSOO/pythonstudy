@@ -1,32 +1,28 @@
-import sys
 from pprint import pprint
 
-### closure
+### local namespace - fuction
 def outer():
-    name = "hi"
-    name2 = "good"
     def inner():
-        nonlocal name,name2
-        name += "world"
-        name2 += "good bye"
-        print(hex(id(name)))
-        print(hex(id(name2)))
-    # GC 이전 주소 확인
-    # print(inner)
+        pass
+    print("enclosed scope에서 inner 함수에 할당 된 주소:",inner)
     return inner
+A = outer()
+print("호출된 outer로 리턴된 inner의 주소:",A)
 
-check_clo = outer()
-
-### inner 함수의 주소와 동일
-#print(check_clo)
-
-### str만 재할당되고, closure 객체는 같은 주소를 포인팅한다.
-check_clo()
-pprint(check_clo.__closure__)
-check_clo()
-pprint(check_clo.__closure__)
-
-### 클로져 원소 확인
-print(check_clo.__closure__[0].cell_contents)
-print(check_clo.__closure__[1].cell_contents)
+def outer():
+    name="BOKJUNSOO"
+    name2="BOKHYUNSOO"
+    print("name의 주소 :",hex(id(name)).upper())
+    print("name2의주소 : ",hex(id(name2)).upper())
+    def inner():
+        nonlocal name, name2
+        name = name + " is me"
+        name2 = name2 + " my brother"
+    return inner
+closure = outer()
+print(f"closure 객체 생성시 : {closure.__closure__[0].cell_contents}이 저장되어 있는 주소 {closure.__closure__[0]}")
+print(f"closure 객체 생성시 : {closure.__closure__[1].cell_contents}가 저장되어 있는 주소 {closure.__closure__[1]}")
+closure()
+print(f"closure 객체로 호출시 : {closure.__closure__[0].cell_contents}가 저장되어 있는 주소 {closure.__closure__[0]}")
+print(f"closure 객체로 호출시 : {closure.__closure__[1].cell_contents}가 저장되어 있는 주소 {closure.__closure__[1]}")
 
